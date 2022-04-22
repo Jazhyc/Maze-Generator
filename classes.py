@@ -3,7 +3,7 @@
 # The object contains information regarding which walls are active and the state of the node
 class Node:
 
-    def __init__(self):
+    def __init__(self, xPos, yPos):
         self.left = True
         self.up = True
         self.right = True
@@ -16,6 +16,12 @@ class Node:
         self.visited = False
 
         self.state = "white"
+        self.x = xPos
+        self.y = yPos
+
+        # Variable used to return the shortest path
+        self.formerNode = None
+
 
 # Class defintion for an action
 # An action consists of both the selected node and the direction of the action

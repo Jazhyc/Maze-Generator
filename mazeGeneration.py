@@ -3,6 +3,7 @@ import threading
 
 from constants import *
 from classes import *
+from shortestPath import getShortestPath
 
 # This function removes the borders of a node
 # The direction specifies which border needs to be removed
@@ -30,7 +31,7 @@ def generateMaze(maze):
 
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
-            maze[j][i] = Node()
+            maze[j][i] = Node(i, j)
 
     # Instantiate the start and end of the maze
     # These are the top left and bottom right corners
@@ -40,10 +41,12 @@ def generateMaze(maze):
     i = random.randrange(0, NUMBER_OF_BLOCKS)
     j = random.randrange(0, NUMBER_OF_BLOCKS)
 
-    DFSgeneration(maze[i][j], i, j, maze)
+    mazeDFS(maze[i][j], i, j, maze)
+
+    getShortestPath(maze)
 
 # Maze generation using DFS
-def DFSgeneration(node, i, j, maze):
+def mazeDFS(node, i, j, maze):
 
     if node.state not in ['green', 'red']:
         node.state = 'orange'
@@ -82,4 +85,4 @@ def DFSgeneration(node, i, j, maze):
 
         removeBorders(maze, i, j, action.direction)
 
-        DFSgeneration(action.node, action.newX, action.newY, maze)
+        mazeDFS(action.node, action.newX, action.newY, maze)
