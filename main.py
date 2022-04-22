@@ -9,7 +9,7 @@ from mazeDisplay import *
 
 def main():
 
-    # Creates a 2D array and passes it the generateMaze daemon
+    # Creates a 2D array and passes it to the generateMaze daemon
     maze = [[0 for i in range(NUMBER_OF_BLOCKS)] for j in range(NUMBER_OF_BLOCKS)]
 
     # Creates a worker thread that runs parallel to the tkinter window

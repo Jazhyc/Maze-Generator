@@ -11,6 +11,15 @@ BLOCK_SIZE = WINDOW_HEIGHT / NUMBER_OF_BLOCKS
 # How much time should pass before the next action takes place
 REFRESH_RATE = 100
 
+# Determines if the maze generation should be animated
+GENERATION_ANIMATION = False
+
+# Determines if the pathfinding should be animated
+PATHFINDING_ANIMATION = False
+
+# Determines if the shortest path should be animated
+SHORTEST_PATH_ANIMATION = False
+
 # This is how thick the walls of the maze should look like
 LINE_SIZE = 6
 

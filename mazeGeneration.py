@@ -51,7 +51,8 @@ def mazeDFS(node, i, j, maze):
     if node.state not in ['green', 'red']:
         node.state = 'orange'
 
-    threading.Event().wait(REFRESH_RATE / 1000)
+    if GENERATION_ANIMATION:
+        threading.Event().wait(REFRESH_RATE / 1000)
 
     if node.state == 'orange':
         node.state = 'white'

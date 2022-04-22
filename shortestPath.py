@@ -14,7 +14,8 @@ def shortestPathHelper(node):
 
     shortestPathHelper(node.formerNode)
 
-    threading.Event().wait(REFRESH_RATE / 1000)
+    if SHORTEST_PATH_ANIMATION:
+        threading.Event().wait(REFRESH_RATE / 1000)
 
     if node.state != 'red':
         node.state = 'orange'
@@ -62,7 +63,8 @@ def BFS(maze, nodeQueue):
             node.state = 'blue'
             searchedNodes.append(node)
 
-        threading.Event().wait(REFRESH_RATE / 1000)
+        if PATHFINDING_ANIMATION:
+            threading.Event().wait(REFRESH_RATE / 1000)
 
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
@@ -123,7 +125,8 @@ def aStar(maze, pQueue):
             node.state = 'blue'
             searchedNodes.append(node)
 
-        threading.Event().wait(REFRESH_RATE / 1000)
+        if PATHFINDING_ANIMATION:
+            threading.Event().wait(REFRESH_RATE / 1000)
 
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
