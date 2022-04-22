@@ -56,7 +56,7 @@ def drawCanvas(canvas, maze, window):
             # This line prints the color of the node
             # A green rectangle represents the start
             # A red rectangle represents the end
-            canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline='white')
+            canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline=f'{node.state}')
     
     window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
     
