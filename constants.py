@@ -13,3 +13,6 @@ REFRESH_RATE = 100
 
 # This is how thick the walls of the maze should look like
 LINE_SIZE = 6
+
+# Search algorithm to be used
+SEARCH_ALGORITHM = 'A*'

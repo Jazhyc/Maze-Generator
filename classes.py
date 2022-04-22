@@ -22,6 +22,9 @@ class Node:
         # Variable used to return the shortest path
         self.formerNode = None
 
+        # This represents the number of steps needed to get from the start node to current node
+        self.cost = 0
+
 
 # Class defintion for an action
 # An action consists of both the selected node and the direction of the action
