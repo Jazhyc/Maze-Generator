@@ -31,8 +31,6 @@ class Node:
 # Only used during maze generation
 class Action:
 
-    def __init__(self, node, direction, newX, newY):
+    def __init__(self, node, direction):
         self.node = node
         self.direction = direction
-        self.newX = newX
-        self.newY = newY

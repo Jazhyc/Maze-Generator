@@ -7,18 +7,20 @@ from heapq import *
 # The animation starts from the starting node
 def shortestPathHelper(node):
 
-    # Base case
-    # Executes once we reach the starting node
-    if node.state == 'green':
-        return
+    pathStack = []
 
-    shortestPathHelper(node.formerNode)
-
-    if SHORTEST_PATH_ANIMATION:
-        threading.Event().wait(REFRESH_RATE / 1000)
-
-    if node.state != 'red':
+    while node.formerNode.state != 'green':
+        pathStack.append(node.formerNode)
+        node = node.formerNode
+    
+    while pathStack:
+        node = pathStack.pop()
         node.state = 'orange'
+
+        if SHORTEST_PATH_ANIMATION:
+            threading.Event().wait(REFRESH_RATE / 1000)
+    
+    shortest_path_found = True
 
 # Function that resets the searched nodes and gets the shortest path
 def displayShortestPath(searchedNodes, maze):

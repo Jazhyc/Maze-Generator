@@ -61,7 +61,8 @@ def drawCanvas(canvas, maze, window):
             # A red rectangle represents the end
             canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline=f'{node.state}')
     
-    window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
+    if not shortest_path_found:
+        window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
     
 
 # Function that displays the maze on a tkinter canvas

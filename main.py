@@ -4,9 +4,6 @@ from constants import *
 from mazeGeneration import *
 from mazeDisplay import *
 
-#! At 50 or more blocks this program will reach the default recursion limit
-#! This occurs due to stack overflow
-
 def main():
 
     # Creates a 2D array and passes it to the generateMaze daemon
