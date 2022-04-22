@@ -5,6 +5,9 @@ import threading
 from constants import *
 from node import *
 
+# Global variable to be used between threads
+mazeGenerated = False
+
 #! At 50 or more blocks this program will reach the default recursion limit
 
 # This function removes the borders of a node
@@ -32,6 +35,8 @@ def DFSgeneration(node, i, j, maze):
 
     if node.state not in ['green', 'red']:
         node.state = 'orange'
+
+    threading.Event().wait(REFRESH_RATE / 1000)
 
     if node.state == 'orange':
         node.state = 'white'
@@ -73,17 +78,46 @@ def DFSgeneration(node, i, j, maze):
 # The start is at the top left and end is the bottom right
 def generateMaze(maze):
 
-    DFSgeneration(maze[0][0], 0, 0, maze)
+    global mazeGenerated
+
+    i = random.randrange(0, NUMBER_OF_BLOCKS)
+    j = random.randrange(0, NUMBER_OF_BLOCKS)
+
+    DFSgeneration(maze[i][j], i, j, maze)
+
+    mazeGenerated = True
 
 # Simple function that creates a tkinter window
 def createWindow():
     window = tk.Tk()
     window.title("Maze")
-    window.geometry(f"{WINDOW_WIDTH}x{WINDOW_HEIGHT}")
+    
+    # This codeblock forces the window to be placed at the centre of the screen
+    # Obtained from https://stackoverflow.com/questions/14910858/how-to-specify-where-a-tkinter-window-opens
+    # get screen width and height
+    ws = window.winfo_screenwidth() # width of the screen
+    hs = window.winfo_screenheight() # height of the screen
+
+    # calculate x and y coordinates for the Tk root window
+    x = (ws/2) - (WINDOW_WIDTH/2)
+    y = (hs/2) - (WINDOW_HEIGHT/2)
+
+    # set the dimensions of the screen 
+    # and where it is placed
+    window.geometry('%dx%d+%d+%d' % (WINDOW_WIDTH, WINDOW_HEIGHT, x, y))
+
+
+    window.focus_set()
+    window.focus_force()
+    window.resizable(False, False)
 
     return window
 
 def drawCanvas(canvas, maze, window):
+
+    global mazeGenerated
+
+    canvas.delete("all")
 
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
@@ -112,6 +146,9 @@ def drawCanvas(canvas, maze, window):
             # A red rectangle represents the end
             canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline='white')
     
+    if not mazeGenerated:
+        window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
+    
 
 # Function that displays the maze on a tkinter canvas
 def displayMaze(maze, window):
@@ -139,6 +176,7 @@ def main():
     mazeAnimation = threading.Thread(target=generateMaze, args=(maze,), daemon=True)
     mazeAnimation.start()
 
+    # Create window and make it prevent its size from being changed
     window = createWindow()
 
     displayMaze(maze, window)
