@@ -5,6 +5,9 @@ from constants import *
 def createWindow():
     window = tk.Tk()
     window.title("Maze")
+
+    # Destroy window on escape
+    window.bind("<Escape>", lambda x: window.destroy())
     
     # This codeblock forces the window to be placed at the centre of the screen
     # Obtained from https://stackoverflow.com/questions/14910858/how-to-specify-where-a-tkinter-window-opens

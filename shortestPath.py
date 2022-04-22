@@ -13,7 +13,6 @@ def shortestPathHelper(node):
 
     threading.Event().wait(REFRESH_RATE / 1000)
 
-
     if node.state != 'red':
         node.state = 'orange'
 
@@ -57,31 +56,30 @@ def BFS(maze, nodeQueue):
         if node.up == False:
             upwardNode = maze[node.y - 1][node.x]
 
+            if not upwardNode.visited:
+                upwardNode.formerNode = node
+                nodeQueue.put(upwardNode)
+
         if node.down == False:
             downwardNode = maze[node.y + 1][node.x]
 
+            if not downwardNode.visited:
+                downwardNode.formerNode = node
+                nodeQueue.put(downwardNode)
+
         if node.left == False:
             leftwardNode = maze[node.y][node.x - 1]
+
+            if not leftwardNode.visited:
+                leftwardNode.formerNode = node
+                nodeQueue.put(leftwardNode)
         
         if node.right == False:
             rightwardNode = maze[node.y][node.x + 1]
 
-        if node.up == False and not upwardNode.visited:
-            upwardNode.formerNode = node
-            nodeQueue.put(upwardNode)
-        
-        if node.right == False and not rightwardNode.visited:
-            rightwardNode.formerNode = node
-            nodeQueue.put(rightwardNode)
-        
-        if node.down == False and not downwardNode.visited:
-            downwardNode.formerNode = node
-            nodeQueue.put(downwardNode)
-        
-        if node.left == False and not leftwardNode.visited:
-            leftwardNode.formerNode = node
-            nodeQueue.put(leftwardNode)
-        
+            if not rightwardNode.visited:
+                rightwardNode.formerNode = node
+                nodeQueue.put(rightwardNode)          
 
 def getShortestPath(maze):
     
