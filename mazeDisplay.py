@@ -81,7 +81,7 @@ def drawCanvas(canvas, maze, window):
                 node.isNodeDisplayed = True
     
     if not shortest_path_found:
-        window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
+        window.after(max(REFRESH_RATE, 1), drawCanvas, canvas, maze, window)
     
 
 # Function that displays the maze on a tkinter canvas

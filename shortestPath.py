@@ -26,10 +26,6 @@ def shortestPathHelper(node):
 
 # Function that resets the searched nodes and gets the shortest path
 def displayShortestPath(searchedNodes, maze):
-
-    # Reset all nodes to white
-    for node in searchedNodes:
-        node.state = 'white'
     
     # Call recursive helper function
     shortestPathHelper(maze[NUMBER_OF_BLOCKS - 1][NUMBER_OF_BLOCKS - 1])
@@ -126,6 +122,8 @@ def aStar(maze, pQueue):
 
         # Executed if we encounter the goal node
         if node.state == 'red':
+            node.formerNode.state = 'cyan'
+            node.formerNode.updateNodeGraphic()
             displayShortestPath(searchedNodes, maze)
             break
 
