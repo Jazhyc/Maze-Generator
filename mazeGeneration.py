@@ -4,6 +4,7 @@ import threading
 from constants import *
 from classes import *
 from shortestPath import getShortestPath
+from mazeDisplay import updateAllNodes
 
 # This function removes the borders of a node
 # The direction specifies which border needs to be removed
@@ -15,18 +16,22 @@ def removeBorders(maze, i, j, direction):
     if direction == 'up':
         maze[j][i].up = False
         maze[j - 1][i].down = False
+        maze[j - 1][i].updateNodeGraphic
 
     if direction == 'right':
         maze[j][i].right = False
         maze[j][i + 1].left = False
+        maze[j][i + 1].updateNodeGraphic
 
     if direction == 'down':
         maze[j][i].down = False
         maze[j + 1][i].up = False
+        maze[j + 1][i].updateNodeGraphic
 
     if direction == 'left':
         maze[j][i].left = False
         maze[j][i - 1].right = False
+        maze[j][i - 1].updateNodeGraphic
 
 # Function that generates a maze
 # The start is at the top left and end is the bottom right
@@ -47,6 +52,8 @@ def generateMaze(maze):
     # Generate Maze using DFS
     mazeDFS(maze[i][j], maze)
 
+    updateAllNodes(maze)
+
     # Calculate and display the shortest path
     getShortestPath(maze)
 
@@ -64,17 +71,23 @@ def mazeDFS(node, maze):
         # If the node has already been used, then we should ignore it
         if node.generated:
             continue
-
+        
+        # Remove the required border and update the visuals of the node
+        node.updateNodeGraphic()
         removeBorders(maze, node.x, node.y, action.direction)
 
         if node.state not in ['green', 'red']:
             node.state = 'orange'
+
+        node.updateNodeGraphic()
 
         if GENERATION_ANIMATION:
             threading.Event().wait(REFRESH_RATE / 1000)
 
         if node.state == 'orange':
             node.state = 'white'
+        
+        node.updateNodeGraphic()
 
         # Mark the current node as generated
         node.generated = True

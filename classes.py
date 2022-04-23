@@ -1,3 +1,30 @@
+class NodeGraphic:
+
+    def __init__(self, rect, upBorder, rightBorder, downBorder, leftBorder, canvas):
+        self.rect = rect
+        self.upBorder = upBorder
+        self.rightBorder = rightBorder
+        self.downBorder = downBorder
+        self.leftBorder = leftBorder
+        self.canvas = canvas
+
+    def markForRemoval(self):
+
+        if self.rect:
+            self.canvas.itemconfig(self.rect, tag='remove')
+        
+        if self.upBorder:
+            self.canvas.itemconfig(self.upBorder, tag='remove')
+        
+        if self.rightBorder:
+            self.canvas.itemconfig(self.rightBorder, tag='remove')
+        
+        if self.downBorder:
+            self.canvas.itemconfig(self.downBorder, tag='remove')
+        
+        if self.leftBorder:
+            self.canvas.itemconfig(self.leftBorder, tag='remove')
+
 # Class defintion for a node
 # These are the squares in the maze
 # The object contains information regarding which walls are active and the state of the node
@@ -24,6 +51,16 @@ class Node:
 
         # This represents the number of steps needed to get from the start node to current node
         self.cost = 0
+
+        # Variable that keeps track if the node has been rendered
+        self.isNodeDisplayed = False
+
+        # This represents the area on the maze that the node represents
+        self.nodeGraphic = NodeGraphic(None, None, None, None, None, None)
+    
+    def updateNodeGraphic(self):
+        self.isNodeDisplayed = False
+        self.nodeGraphic.markForRemoval()
 
 
 # Class defintion for an action

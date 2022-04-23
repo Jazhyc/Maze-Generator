@@ -3,7 +3,7 @@ from constants import *
 import threading
 from heapq import *
 
-# Recursive function that marks the shortest path in a certain color
+# function that marks the shortest path in a certain color
 # The animation starts from the starting node
 def shortestPathHelper(node):
 
@@ -16,6 +16,8 @@ def shortestPathHelper(node):
     while pathStack:
         node = pathStack.pop()
         node.state = 'orange'
+
+        node.updateNodeGraphic()
 
         if SHORTEST_PATH_ANIMATION:
             threading.Event().wait(REFRESH_RATE / 1000)
@@ -64,6 +66,8 @@ def BFS(maze, nodeQueue):
         if node.state not in ['green', 'red']:
             node.state = 'blue'
             searchedNodes.append(node)
+        
+        node.updateNodeGraphic()
 
         if PATHFINDING_ANIMATION:
             threading.Event().wait(REFRESH_RATE / 1000)
@@ -71,6 +75,8 @@ def BFS(maze, nodeQueue):
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
             node.state = 'cyan'
+
+        node.updateNodeGraphic()
 
         if node.up == False:
             upwardNode = maze[node.y - 1][node.x]
@@ -92,6 +98,7 @@ def BFS(maze, nodeQueue):
 
             BFShelper(nodeQueue, node, rightwardNode)
 
+# This is function that calculates the heuristic for a node and inserts it into the priority queue
 def calculateHeuristic(pQueue, currentNode, newNode, count):
 
     if not newNode.visited:
@@ -105,6 +112,7 @@ def calculateHeuristic(pQueue, currentNode, newNode, count):
 
         heappush(pQueue, costTuple)
 
+# A* search algorithm
 def aStar(maze, pQueue):
 
     searchedNodes = []
@@ -126,6 +134,8 @@ def aStar(maze, pQueue):
         if node.state not in ['green', 'red']:
             node.state = 'blue'
             searchedNodes.append(node)
+        
+        node.updateNodeGraphic()
 
         if PATHFINDING_ANIMATION:
             threading.Event().wait(REFRESH_RATE / 1000)
@@ -133,6 +143,8 @@ def aStar(maze, pQueue):
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
             node.state = 'cyan'
+        
+        node.updateNodeGraphic()
         
         if node.up == False:
             upwardNode = maze[node.y - 1][node.x]
@@ -154,7 +166,7 @@ def aStar(maze, pQueue):
 
             calculateHeuristic(pQueue, node, rightwardNode, count)
 
-
+# Function that calls either BFS or A*
 def getShortestPath(maze):
     
     # The starting node is at the top left corner

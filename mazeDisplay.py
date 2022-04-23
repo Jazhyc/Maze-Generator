@@ -1,5 +1,6 @@
 import tkinter as tk
 from constants import *
+from classes import NodeGraphic
 
 # Simple function that creates a tkinter window
 def createWindow():
@@ -30,9 +31,16 @@ def createWindow():
 
     return window
 
+# Function that tells the canvas to update the visuals of all nodes
+def updateAllNodes(maze):
+    for i in range(NUMBER_OF_BLOCKS):
+        for j in range(NUMBER_OF_BLOCKS):
+            maze[j][i].updateNodeGraphic()
+
 def drawCanvas(canvas, maze, window):
 
-    canvas.delete("all")
+    # Only remove the objects that are marked for removal
+    canvas.delete("remove")
 
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
@@ -44,22 +52,33 @@ def drawCanvas(canvas, maze, window):
             
             node = maze[j][i]
 
-            if node.left:
-                canvas.create_line(x1, y1, x1, y2, width=LINE_SIZE)
-            
-            if node.up:
-                canvas.create_line(x1, y1, x2, y1, width=LINE_SIZE)
-            
-            if node.right:
-                canvas.create_line(x2, y1, x2, y2, width=LINE_SIZE)
-            
-            if node.down:
-                canvas.create_line(x1, y2, x2, y2, width=LINE_SIZE)
+            if not node.isNodeDisplayed:
 
-            # This line prints the color of the node
-            # A green rectangle represents the start
-            # A red rectangle represents the end
-            canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline=f'{node.state}')
+                # This line prints the color of the node
+                # A green rectangle represents the start
+                # A red rectangle represents the end
+                rect = canvas.create_rectangle(x1, y1, x2, y2, fill=f'{node.state}', outline=f'{node.state}')
+
+                leftBorder = None
+                upBorder = None
+                rightBorder = None
+                downBorder = None
+
+                if node.left:
+                    leftBorder = canvas.create_line(x1, y1, x1, y2, width=LINE_SIZE)
+                
+                if node.up:
+                    upBorder = canvas.create_line(x1, y1, x2, y1, width=LINE_SIZE)
+                
+                if node.right:
+                    rightBorder = canvas.create_line(x2, y1, x2, y2, width=LINE_SIZE)
+                
+                if node.down:
+                    downBorder = canvas.create_line(x1, y2, x2, y2, width=LINE_SIZE)
+
+                node.nodeGraphic = NodeGraphic(rect, upBorder, rightBorder, downBorder, leftBorder, canvas)
+
+                node.isNodeDisplayed = True
     
     if not shortest_path_found:
         window.after(REFRESH_RATE, drawCanvas, canvas, maze, window)
