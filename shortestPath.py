@@ -1,11 +1,14 @@
 from queue import Queue
-from constants import *
+import constants
 import threading
 from heapq import *
 
 # function that marks the shortest path in a certain color
 # The animation starts from the starting node
 def shortestPathHelper(node):
+
+    REFRESH_RATE = constants.REFRESH_RATE
+    SHORTEST_PATH_ANIMATION = constants.SHORTEST_PATH_ANIMATION
 
     pathStack = []
 
@@ -26,6 +29,8 @@ def shortestPathHelper(node):
 
 # Function that resets the searched nodes and gets the shortest path
 def displayShortestPath(searchedNodes, maze):
+
+    NUMBER_OF_BLOCKS = constants.NUMBER_OF_BLOCKS
     
     # Call recursive helper function
     shortestPathHelper(maze[NUMBER_OF_BLOCKS - 1][NUMBER_OF_BLOCKS - 1])
@@ -33,7 +38,7 @@ def displayShortestPath(searchedNodes, maze):
 # Function that returns the manhattan distance from a node to the end
 # This is a simple but efficient heuristic
 def manhattanDistance(x, y):
-    return 2 * NUMBER_OF_BLOCKS - x - y
+    return 2 * constants.NUMBER_OF_BLOCKS - x - y
 
 def BFShelper(nodeQueue, currentNode, newNode):
 
@@ -65,7 +70,7 @@ def BFS(maze, nodeQueue):
         
         node.updateNodeGraphic()
 
-        if PATHFINDING_ANIMATION:
+        if constants.PATHFINDING_ANIMATION:
             threading.Event().wait(REFRESH_RATE / 1000)
 
         # Change the node to a color that represents the fact that it's been accounted for
@@ -135,8 +140,8 @@ def aStar(maze, pQueue):
         
         node.updateNodeGraphic()
 
-        if PATHFINDING_ANIMATION:
-            threading.Event().wait(REFRESH_RATE / 1000)
+        if constants.PATHFINDING_ANIMATION:
+            threading.Event().wait(constants.REFRESH_RATE / 1000)
 
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
@@ -169,6 +174,8 @@ def getShortestPath(maze):
     
     # The starting node is at the top left corner
     startNode = maze[0][0]
+
+    SEARCH_ALGORITHM = constants.SEARCH_ALGORITHM
 
     if SEARCH_ALGORITHM == 'BFS':
 

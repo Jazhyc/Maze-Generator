@@ -1,3 +1,6 @@
+# Class definition for a NodeGraphic
+# This is an object that keeps track of the various objects used to illustrate a node on the canvas
+# This class is needed to drastically improve the performance of tkinter when displaying large mazes
 class NodeGraphic:
 
     def __init__(self, rect, upBorder, rightBorder, downBorder, leftBorder, canvas):

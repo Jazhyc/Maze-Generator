@@ -1,13 +1,17 @@
 import tkinter as tk
 import threading
-from constants import *
+import constants
 from mazeGeneration import *
 from mazeDisplay import *
+from inputWindow import *
 
 def main():
 
+    input_window()
+    print(constants.NUMBER_OF_BLOCKS)
+
     # Creates a 2D array and passes it to the generateMaze daemon
-    maze = [[0 for i in range(NUMBER_OF_BLOCKS)] for j in range(NUMBER_OF_BLOCKS)]
+    maze = [[0 for i in range(constants.NUMBER_OF_BLOCKS)] for j in range(constants.NUMBER_OF_BLOCKS)]
 
     # Creates a worker thread that runs parallel to the tkinter window
     mazeAnimation = threading.Thread(target=generateMaze, args=(maze,), daemon=True)

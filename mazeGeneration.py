@@ -1,7 +1,7 @@
 import random
 import threading
 
-from constants import *
+import constants
 from classes import *
 from shortestPath import getShortestPath
 from mazeDisplay import updateAllNodes
@@ -37,6 +37,8 @@ def removeBorders(maze, i, j, direction):
 # The start is at the top left and end is the bottom right
 def generateMaze(maze):
 
+    NUMBER_OF_BLOCKS = constants.NUMBER_OF_BLOCKS
+
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
             maze[j][i] = Node(i, j)
@@ -59,6 +61,10 @@ def generateMaze(maze):
 
 # Maze generation using DFS
 def mazeDFS(node, maze):
+
+    REFRESH_RATE = constants.REFRESH_RATE
+    GENERATION_ANIMATION = constants.GENERATION_ANIMATION
+    NUMBER_OF_BLOCKS = constants.NUMBER_OF_BLOCKS
 
     actionStack = []
     actionStack.append(Action(node, "None"))

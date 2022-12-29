@@ -1,11 +1,14 @@
 import tkinter as tk
-from constants import *
+import constants
 from classes import NodeGraphic
 
 # Simple function that creates a tkinter window
 def createWindow():
     window = tk.Tk()
     window.title("Maze")
+
+    WINDOW_HEIGHT = constants.WINDOW_HEIGHT
+    WINDOW_WIDTH = constants.WINDOW_WIDTH
 
     # Destroy window on escape
     window.bind("<Escape>", lambda x: window.destroy())
@@ -33,6 +36,9 @@ def createWindow():
 
 # Function that tells the canvas to update the visuals of all nodes
 def updateAllNodes(maze):
+
+    NUMBER_OF_BLOCKS = constants.NUMBER_OF_BLOCKS
+
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
             maze[j][i].updateNodeGraphic()
@@ -41,6 +47,10 @@ def drawCanvas(canvas, maze, window):
 
     # Only remove the objects that are marked for removal
     canvas.delete("remove")
+
+    NUMBER_OF_BLOCKS = constants.NUMBER_OF_BLOCKS
+    BLOCK_SIZE = constants.BLOCK_SIZE
+    LINE_SIZE = constants.LINE_SIZE
 
     for i in range(NUMBER_OF_BLOCKS):
         for j in range(NUMBER_OF_BLOCKS):
@@ -80,8 +90,8 @@ def drawCanvas(canvas, maze, window):
 
                 node.isNodeDisplayed = True
     
-    if not shortest_path_found:
-        window.after(max(REFRESH_RATE, 1), drawCanvas, canvas, maze, window)
+    if not constants.shortest_path_found:
+        window.after(max(constants.REFRESH_RATE, 1), drawCanvas, canvas, maze, window)
     
 
 # Function that displays the maze on a tkinter canvas
