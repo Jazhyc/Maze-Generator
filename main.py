@@ -8,7 +8,6 @@ from inputWindow import *
 def main():
 
     input_window()
-    print(constants.NUMBER_OF_BLOCKS)
 
     # Creates a 2D array and passes it to the generateMaze daemon
     maze = [[0 for i in range(constants.NUMBER_OF_BLOCKS)] for j in range(constants.NUMBER_OF_BLOCKS)]

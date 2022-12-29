@@ -71,7 +71,7 @@ def BFS(maze, nodeQueue):
         node.updateNodeGraphic()
 
         if constants.PATHFINDING_ANIMATION:
-            threading.Event().wait(REFRESH_RATE / 1000)
+            threading.Event().wait(constants.REFRESH_RATE / 1000)
 
         # Change the node to a color that represents the fact that it's been accounted for
         if node.state == 'blue':
